@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AcadVault — Unlock Your True Academic Potential</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- All styles → styles.css -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     AUTH SCREEN  ·  auth.html
+     ═══════════════════════════════════════════ -->
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-wrap">
+    <div class="auth-hero">
+      <div class="hero-logo"><img src="logo.svg" alt="AcadVault logo" style="width:44px;height:44px"><span>AcadVault</span></div>
+      <div class="hero-sub">Unlock Your True Academic Potential</div>
+      <div class="hero-line"></div>
+      <div class="hf"><div class="hf-icon">📅</div><div><strong>Smart Scheduling</strong><span>Plan sessions with subjects, priority &amp; time</span></div></div>
+      <div class="hf"><div class="hf-icon">✅</div><div><strong>Progress Tracking</strong><span>Build streaks and hit your weekly goals</span></div></div>
+      <div class="hf"><div class="hf-icon">⏱️</div><div><strong>Focus Timer</strong><span>Pomodoro sessions for deep work</span></div></div>
+      <div class="hf"><div class="hf-icon">👤</div><div><strong>Private Accounts</strong><span>Each user's data is completely isolated</span></div></div>
+    </div>
+    <div class="auth-panel">
+      <div class="ap-title" id="auth-title">Welcome back</div>
+      <div class="ap-sub"   id="auth-sub">Sign in to continue your study journey</div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
+        <div class="auth-tab"        onclick="switchTab('register')">Create Account</div>
+      </div>
+      <div class="auth-form active" id="form-login">
+        <div class="msg msg-err" id="login-err"></div>
+        <div class="fg"><label>Username</label><div class="iw"><span class="ii">@</span><input type="text" id="l-user" class="ic" maxlength="30" autocomplete="username" placeholder="your_username" onkeydown="if(event.key==='Enter')doLogin()"></div></div>
+        <div class="fg"><label>Password</label><div class="iw"><span class="ii">🔒</span><input type="password" id="l-pass" class="ic" maxlength="128" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div></div>
+        <button class="btn btn-gold" style="width:100%" onclick="doLogin()">Sign In →</button>
+        <div class="sw">No account? <span onclick="switchTab('register')">Create one free</span></div>
+      </div>
+      <div class="auth-form" id="form-register">
+        <div class="msg msg-err" id="reg-err"></div>
+        <div class="msg msg-ok"  id="reg-ok"></div>
+        <div class="fg"><label>Full Name</label><input type="text" id="r-name" maxlength="60" placeholder="e.g. Arun Kumar" autocomplete="name"></div>
+        <div class="fg">
+          <label>Username</label>
+          <div class="iw"><span class="ii">@</span><input type="text" id="r-user" class="ic" maxlength="30" placeholder="choose_username" autocomplete="username" oninput="checkUsername(this.value)" onkeydown="if(event.key==='Enter')doRegister()"></div>
+          <div class="us" id="us-status"></div>
+        </div>
+        <div class="fg">
+          <label>Password</label>
+          <div class="iw"><span class="ii">🔒</span><input type="password" id="r-pass" class="ic" maxlength="128" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkPwStr(this.value)"></div>
+          <div class="pw-bars"><div class="pw-bar" id="pw1"></div><div class="pw-bar" id="pw2"></div><div class="pw-bar" id="pw3"></div><div class="pw-bar" id="pw4"></div></div>
+          <div class="pw-lbl" id="pw-lbl">Enter a password</div>
+        </div>
+        <div class="fg"><label>Confirm Password</label><div class="iw"><span class="ii">🔒</span><input type="password" id="r-pass2" class="ic" maxlength="128" placeholder="Repeat password" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()"></div></div>
+        <button class="btn btn-gold" style="width:100%" onclick="doRegister()">Create Account →</button>
+        <div class="sw">Already have an account? <span onclick="switchTab('login')">Sign in</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     APP SHELL  ·  sidebar.html
+     ═══════════════════════════════════════════ -->
+<!-- APP -->
+<div id="app-screen">
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo">
+        <img src="logo.svg" alt="AcadVault" style="width:30px;height:30px;flex-shrink:0">
+        <span>AcadVault</span>
+      </div>
+      <div class="sb-tagline">Unlock Your True Academic Potential</div>
+    </div>
+    <div class="u-pill">
+      <div class="avatar" id="user-avatar">SF</div>
+      <div><div class="u-name" id="user-name">—</div><div class="u-tag" id="user-tag">@username</div></div>
+    </div>
+    <div class="nav-sec">Navigation</div>
+    <div class="nav-item active" onclick="go('dashboard')"><span class="ni">⚡</span>Dashboard</div>
+    <div class="nav-item"        onclick="go('planner')"><span class="ni">📋</span>Planner</div>
+    <div class="nav-item"        onclick="go('tracker')"><span class="ni">✅</span>Tracker</div>
+    <div class="nav-item"        onclick="go('subjects')"><span class="ni">📚</span>Subjects</div>
+    <div class="nav-item"        onclick="go('calendar')"><span class="ni">🗓</span>Calendar</div>
+    <div class="nav-item"        onclick="go('timer')"><span class="ni">⏱</span>Focus Timer</div>
+    <div class="sb-foot">
+      <div class="streak-c" onclick="showStreakInfo()" style="cursor:pointer;position:relative" title="Click to see streak rules">
+        <span style="font-size:22px">🔥</span>
+        <div>
+          <div class="s-num" id="snum">0</div>
+          <div class="s-lbl">Day Streak</div>
+        </div>
+        <span style="font-size:10px;color:var(--amber);margin-left:auto">ℹ</span>
+      </div>
+      <!-- Streak info tooltip -->
+      <div class="streak-tooltip" id="streak-tooltip" style="display:none">
+        🔥 <strong>Streak Rules</strong><br>
+        Study at least <strong>45 min</strong> per day to keep your streak alive.<br>
+        Miss a day (or study less than 45 min) and it resets to 0.
+        <div id="streak-today-status" style="margin-top:8px;font-size:11px"></div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;font-size:13px" onclick="doLogout()">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ════════════════════════════════
+         DASHBOARD  ·  page-dashboard.html
+         ════════════════════════════════ -->
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div id="overdue-area"></div>
+      <div id="active-area"></div>
+      <div id="dash-tests-area"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:14px">
+        <div><div class="ph-title" id="dash-greet">Good day <span>👋</span></div><div class="ph-sub" id="today-date"></div></div>
+        <div class="today-badge" id="today-count">0 sessions today</div>
+      </div>
+      <div class="g3">
+        <div class="stat-card"><div class="st-icon">⏰</div><div class="st-label">Hours This Week</div><div class="st-value" id="st-hrs" style="color:var(--green)">0.0</div><div class="st-sub" id="st-sub">0 sessions done</div></div>
+        <div class="stat-card"><div class="st-icon">🎯</div><div class="st-label">Sessions Done</div><div class="st-value" id="st-done" style="background:var(--goldg);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div><div class="st-sub">this week</div></div>
+        <div class="stat-card"><div class="st-icon">📈</div><div class="st-label">Completion Rate</div><div class="st-value" id="st-rate" style="color:var(--blue)">0%</div><div class="st-sub">this week</div></div>
+      </div>
+      <div class="g2">
+        <div class="card">
+          <div class="c-hdr"><span class="c-lbl">Today's Study Plan</span><button class="btn btn-gold btn-sm" onclick="go('planner')">+ Add</button></div>
+          <div id="today-sess"><div class="empty"><div class="empty-icon">📝</div><p>No sessions today.<br>Head to the Planner!</p></div></div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:18px">
+            <div class="c-hdr"><span class="c-lbl">Upcoming Tests</span><button class="btn btn-ghost btn-sm" onclick="go('calendar')" style="font-size:11px">+ Add Test</button></div>
+            <div id="dash-meetings-list"><div class="empty" style="padding:20px 10px"><div class="empty-icon" style="font-size:24px">📝</div><p>No upcoming tests.</p></div></div>
+          </div>
+          <div class="card">
+            <div class="c-hdr"><span class="c-lbl">Weekly Activity</span></div>
+            <div class="bar-chart" id="weekly-chart"></div>
+            <div class="divider"></div>
+            <div class="c-lbl" style="margin-bottom:14px">Subject Progress</div>
+            <div id="sub-prog"><p style="font-size:13px;color:var(--dim)">Add subjects to see progress.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         PLANNER  ·  page-planner.html
+         ════════════════════════════════ -->
+    <!-- PLANNER -->
+    <div class="page" id="page-planner">
+      <div class="ph"><div class="ph-title">Session <span>Planner</span></div><div class="ph-sub">Schedule study sessions for any subject you want</div></div>
+      <div class="g2">
+        <div class="card">
+          <div class="c-lbl" style="margin-bottom:20px">New Session</div>
+          <div class="fg" style="position:relative">
+            <label>Subject <span style="color:var(--dim);font-weight:400;text-transform:none;letter-spacing:0">(type anything)</span></label>
+            <input type="text" id="pl-sub" maxlength="80" placeholder="e.g. Mathematics, Physics, Tamil…" autocomplete="off" oninput="subSug(this.value)" onblur="setTimeout(hideSug,180)">
+            <div class="sug-box" id="sub-sug"></div>
+          </div>
+          <div class="fg"><label>Topic / Task</label><input type="text" id="pl-topic" maxlength="120" placeholder="e.g. Chapter 5 — Derivatives"></div>
+          <div class="fr2"><div class="fg"><label>Date</label><input type="date" id="pl-date" onchange="validatePlTime()"></div>
+          <div class="fg">
+            <label>Starting Time <span style="font-size:10px;color:var(--dim);font-weight:400;text-transform:none;letter-spacing:0">(24-hr or use AM/PM toggle)</span></label>
+            <div class="time-input-wrap">
+              <input type="time" id="pl-time" oninput="validatePlTime()" style="flex:1;min-width:0">
+              <div class="ampm-toggle" id="pl-ampm-display" style="flex-shrink:0">
+                <span class="ampm-opt" onclick="setTimeAmPm('AM')">AM</span>
+                <span class="ampm-opt" onclick="setTimeAmPm('PM')">PM</span>
+              </div>
+            </div>
+            <div class="time-hint" id="pl-time-hint"></div>
+          </div></div>
+          <div class="fr2"><div class="fg"><label>Duration (min)</label><input type="number" id="pl-dur" value="60" min="15" max="480" step="15" onkeydown="return numOnly(event)"></div><div class="fg"><label>Priority</label><select id="pl-pri"><option value="normal">Normal</option><option value="high">⚡ High</option><option value="low">Low</option></select></div></div>
+          <div class="fg"><label>Notes</label><textarea id="pl-notes" maxlength="500" placeholder="What will you focus on?" rows="2"></textarea></div>
+          <button class="btn btn-gold" style="width:100%" onclick="addSess()">Schedule Session →</button>
+        </div>
+        <div class="card"><div class="c-hdr"><span class="c-lbl">Upcoming Sessions</span></div><div id="upcoming"><div class="empty"><div class="empty-icon">🗓</div><p>No upcoming sessions yet.</p></div></div></div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         TRACKER  ·  page-tracker.html
+         ════════════════════════════════ -->
+    <!-- TRACKER -->
+    <div class="page" id="page-tracker">
+      <div class="ph"><div class="ph-title">Session <span>Tracker</span></div><div class="ph-sub">Filter, search and manage all your study sessions</div></div>
+      <div class="filter-bar">
+        <div class="filter-search">
+          <span class="filter-search-icon">🔍</span>
+          <input type="text" id="tr-search" placeholder="Search sessions…" oninput="renderTracker()">
+        </div>
+        <div class="filter-chips" id="tr-status-chips">
+          <span class="chip active" data-status="all"     onclick="setTrStatus('all',this)">All</span>
+          <span class="chip"        data-status="pending" onclick="setTrStatus('pending',this)">Pending</span>
+          <span class="chip"        data-status="done"    onclick="setTrStatus('done',this)">Completed</span>
+          <span class="chip"        data-status="today"   onclick="setTrStatus('today',this)">Today</span>
+        </div>
+        <select id="tr-subject"  class="filter-select" onchange="renderTracker()"><option value="">All Subjects</option></select>
+        <select id="tr-priority" class="filter-select" onchange="renderTracker()">
+          <option value="">All Priorities</option>
+          <option value="high">⚡ High</option>
+          <option value="normal">Normal</option>
+          <option value="low">Low</option>
+        </select>
+        <select id="tr-sort" class="filter-select" onchange="renderTracker()">
+          <option value="date-asc">Date ↑</option>
+          <option value="date-desc">Date ↓</option>
+          <option value="subject">Subject A–Z</option>
+          <option value="duration">Duration</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="clearTrFilters()" id="tr-clear" style="display:none;white-space:nowrap">✕ Clear</button>
+      </div>
+      <div id="tr-count" style="font-size:12px;color:var(--muted);margin-bottom:12px"></div>
+      <div class="card"><div id="tracker"><div class="empty"><div class="empty-icon">✅</div><p>Add sessions in the Planner first!</p></div></div></div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SUBJECTS  ·  page-subjects.html
+         ════════════════════════════════ -->
+    <!-- SUBJECTS -->
+    <div class="page" id="page-subjects">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:14px">
+        <div class="ph" style="margin-bottom:0"><div class="ph-title">My <span>Subjects</span></div><div class="ph-sub">Manage your subjects and weekly study goals</div></div>
+        <button class="btn btn-gold" onclick="openMo()">+ New Subject</button>
+      </div>
+      <div class="g3" id="sub-grid"></div>
+    </div>
+
+    <!-- ════════════════════════════════
+         CALENDAR  ·  page-calendar.html
+         ════════════════════════════════ -->
+    <!-- CALENDAR -->
+    <div class="page" id="page-calendar">
+      <div class="ph"><div class="ph-title">Study <span>Calendar</span></div><div class="ph-sub">Schedule tests and view your study sessions — get reminded the day before</div></div>
+
+      <div class="g2" style="margin-bottom:18px">
+        <!-- Calendar grid -->
+        <div class="card">
+          <div class="c-hdr">
+            <button class="btn btn-ghost btn-sm" onclick="chMonth(-1)">← Prev</button>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700" id="cal-lbl"></span>
+            <button class="btn btn-ghost btn-sm" onclick="chMonth(1)">Next →</button>
+          </div>
+          <div class="cal-grid" id="cal-hdrs"></div>
+          <div style="height:10px"></div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <!-- Legend -->
+          <div style="display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>Study Session</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span>Test / Exam</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span>Both</div>
+          </div>
+        </div>
+
+        <!-- Add test form -->
+        <div class="card">
+          <div class="c-lbl" style="margin-bottom:18px">📝 Schedule a Test / Exam</div>
+          <div class="fg"><label>Test Name</label><input type="text" id="ct-title" maxlength="100" placeholder="e.g. Mathematics Unit Test, Physics Exam…"></div>
+          <div class="fg"><label>Subject</label><input type="text" id="ct-subject" maxlength="60" placeholder="e.g. Mathematics"></div>
+          <div class="fr2">
+            <div class="fg"><label>Date</label><input type="date" id="ct-date"></div>
+            <div class="fg"><label>Time (optional)</label><input type="time" id="ct-time"></div>
+          </div>
+          <div class="fg"><label>Notes / Syllabus</label><textarea id="ct-notes" maxlength="500" placeholder="Topics to cover, exam pattern…" rows="3"></textarea></div>
+          <button class="btn btn-gold" style="width:100%" onclick="addCalTest()">Add Test to Calendar →</button>
+          <div style="margin-top:12px;padding:10px 14px;background:rgba(245,166,35,0.07);border:1px solid rgba(245,166,35,0.2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.6">
+            🔔 You'll get a <strong style="color:var(--amber)">reminder popup 1 day before</strong> the test automatically.<br>
+            📚 Study sessions are added from the <strong style="color:var(--gold2)">Planner</strong> page.
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming tests list -->
+      <div class="card" style="margin-bottom:18px" id="cal-tests-list-card">
+        <div class="c-hdr">
+          <span class="c-lbl">Upcoming Tests & Exams</span>
+          <span id="cal-tests-count" style="font-size:11px;color:var(--muted)"></span>
+        </div>
+        <div id="cal-tests-list"><div class="empty"><div class="empty-icon" style="font-size:24px">📝</div><p>No tests scheduled yet.</p></div></div>
+      </div>
+
+      <!-- Day detail -->
+      <div class="card" id="cal-day-card">
+        <div class="c-hdr">
+          <span class="c-lbl" id="cal-sel">Click a day to view details</span>
+          <button class="btn btn-gold btn-sm" onclick="go('planner')" style="font-size:11px">+ Study Session</button>
+        </div>
+        <div id="cal-day"><div class="empty"><p>Click any highlighted day to see what's scheduled.</p></div></div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         TIMER  ·  page-timer.html
+         ════════════════════════════════ -->
+    <!-- TIMER -->
+    <div class="page" id="page-timer">
+      <div class="ph"><div class="ph-title">Focus <span>Timer</span></div><div class="ph-sub">Pomodoro-style sessions for deep focused work</div></div>
+      <div class="g2">
+        <div class="card" style="text-align:center">
+          <div class="c-lbl" id="t-mode" style="margin-bottom:0">Focus Time</div>
+          <div class="timer-disp" id="t-disp">25:00</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-bottom:22px;flex-wrap:wrap">
+            <span class="chip active" onclick="setMode('focus',this)">🎯 Focus</span>
+            <span class="chip" onclick="setMode('short',this)">☕ Short Break</span>
+            <span class="chip" onclick="setMode('long',this)">🌿 Long Break</span>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:center">
+            <button class="btn btn-ghost" onclick="resetT()">↺ Reset</button>
+            <button class="btn btn-gold" id="t-btn" onclick="toggleT()" style="min-width:110px">▶ Start</button>
+          </div>
+          <div class="divider"></div>
+          <div style="font-size:13px;color:var(--muted)">Sessions today: <strong id="t-sess" style="color:var(--text)">0</strong></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px">Total focus: <strong id="t-total" style="color:var(--green)">0 min</strong></div>
+        </div>
+        <div class="card">
+          <div class="c-lbl" style="margin-bottom:18px">Timer Settings</div>
+          <div class="fg"><label>Focus Duration (min)</label><input type="number" id="fl" value="25" min="5" max="90" onkeydown="return numOnly(event)"></div>
+          <div class="fg"><label>Short Break (min)</label><input type="number" id="sl" value="5" min="1" max="30" onkeydown="return numOnly(event)"></div>
+          <div class="fg"><label>Long Break (min)</label><input type="number" id="ll" value="15" min="5" max="60" onkeydown="return numOnly(event)"></div>
+          <div class="divider"></div>
+          <div class="c-lbl" style="margin-bottom:10px">Link to Session</div>
+          <select id="t-link"><option value="">— None —</option></select>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MOBILE BOTTOM NAV
+     ═══════════════════════════════════════════ -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mn-item active" onclick="go('dashboard');setMobNav(this)"><span class="mn-icon">⚡</span><span class="mn-lbl">Home</span></div>
+  <div class="mn-item" onclick="go('planner');setMobNav(this)"><span class="mn-icon">📋</span><span class="mn-lbl">Planner</span></div>
+  <div class="mn-item" onclick="go('tracker');setMobNav(this)"><span class="mn-icon">✅</span><span class="mn-lbl">Tracker</span></div>
+  <div class="mn-item" onclick="go('calendar');setMobNav(this)"><span class="mn-icon">🗓</span><span class="mn-lbl">Calendar</span></div>
+  <div class="mn-item" onclick="go('timer');setMobNav(this)"><span class="mn-icon">⏱</span><span class="mn-lbl">Timer</span></div>
+  <div class="mn-item" onclick="go('subjects');setMobNav(this)"><span class="mn-icon">📚</span><span class="mn-lbl">Subjects</span></div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     MODALS  ·  modals.html
+     ═══════════════════════════════════════════ -->
+<div id="alerts-container"></div>
+
+<div class="mo" id="postpone-modal">
+  <div class="modal">
+    <div class="mo-hdr"><div class="mo-title">Postpone Session</div><button class="x-btn" onclick="closePostpone()">✕</button></div>
+    <div class="pt-sub" id="pt-sub">Choose a new starting time for this session.</div>
+    <div class="fg"><label>New Starting Time</label><input type="time" id="pt-time"></div>
+    <div class="fg"><label>New Date (if different)</label><input type="date" id="pt-date"></div>
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn btn-ghost" style="flex:1" onclick="closePostpone()">Cancel</button>
+      <button class="btn btn-gold"  style="flex:1" onclick="confirmPostpone()">Set Reminder →</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="meeting-modal">
+  <div class="modal">
+    <div class="mo-hdr"><div class="mo-title" id="mm-title">Edit Meeting</div><button class="x-btn" onclick="closeMeetingMo()">✕</button></div>
+    <div class="fg"><label>Meeting Title</label><input type="text" id="mm-t" maxlength="100"></div>
+    <div class="fg"><label>Description</label><textarea id="mm-desc" rows="2" maxlength="500"></textarea></div>
+    <div class="fr2"><div class="fg"><label>Date</label><input type="date" id="mm-date"></div><div class="fg"><label>Starting Time</label><input type="time" id="mm-time"></div></div>
+    <div class="fr2">
+      <div class="fg"><label>Duration (min)</label><input type="number" id="mm-dur" min="5" max="480" step="5" onkeydown="return numOnly(event)"></div>
+      <div class="fg"><label>Type</label><select id="mm-type"><option value="study_group">📚 Study Group</option><option value="teacher">👨‍🏫 Teacher / Tutor</option><option value="exam_prep">📝 Exam Prep</option><option value="online">💻 Online Meeting</option><option value="personal">👤 Personal</option><option value="other">📌 Other</option></select></div>
+    </div>
+    <div class="fg"><label>Location / Link</label><input type="text" id="mm-loc" maxlength="200"></div>
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeMeetingMo()">Cancel</button>
+      <button class="btn btn-gold"  style="flex:1" onclick="saveMeetingEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="mo">
+  <div class="modal">
+    <div class="mo-hdr"><div class="mo-title" id="mo-title">New Subject</div><button class="x-btn" onclick="closeMo()">✕</button></div>
+    <div class="fg"><label>Subject Name</label><input type="text" id="sn" maxlength="60" placeholder="e.g. Mathematics"></div>
+    <div class="fr2">
+      <div class="fg"><label>Emoji Icon</label><input type="text" id="se" placeholder="📐" maxlength="2" style="font-size:22px;text-align:center"></div>
+      <div class="fg"><label>Color Theme</label><select id="sc"><option value="gold">Gold</option><option value="blue">Blue</option><option value="green">Green</option><option value="purple">Purple</option><option value="red">Red</option><option value="teal">Teal</option><option value="pink">Pink</option><option value="amber">Amber</option></select></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label>Weekly Goal (hours)</label><input type="number" id="sg" value="10" min="1" max="80" onkeydown="return numOnly(event)"></div>
+      <div class="fg"><label>Exam Date (optional)</label><input type="date" id="sx"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeMo()">Cancel</button>
+      <button class="btn btn-gold"  style="flex:1" onclick="saveSub()">Save Subject</button>
+    </div>
+  </div>
+</div>
+
+<!-- OFFLINE BANNER -->
+<div id="offline-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;padding:10px 20px;font-size:13px;font-weight:600;align-items:center;justify-content:center;gap:10px;text-align:center">
+  📡 No internet connection — AcadVault requires internet to load fonts and features. Please check your connection.
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ALL JAVASCRIPT  ·  app.js
+     ═══════════════════════════════════════════ -->
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#f5dfa0"/>
+    </linearGradient>
+    <linearGradient id="gold-grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c9a84c"/>
+      <stop offset="50%" stop-color="#e8c96a"/>
+      <stop offset="100%" stop-color="#f5dfa0"/>
+    </linearGradient>
+  </defs>
+  <!-- Graduation cap base -->
+  <path d="M24 8L4 18L24 28L44 18L24 8Z" fill="url(#gold-grad)" opacity="0.9"/>
+  <!-- Cap brim shadow -->
+  <path d="M24 28L4 18V22L24 32L44 22V18L24 28Z" fill="url(#gold-grad2)" opacity="0.6"/>
+  <!-- Tassel string -->
+  <line x1="38" y1="18" x2="38" y2="34" stroke="#e8c96a" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Tassel end -->
+  <circle cx="38" cy="35.5" r="2" fill="url(#gold-grad)"/>
+  <!-- Open book at bottom -->
+  <path d="M14 32C14 32 19 30 24 32C29 30 34 32 34 32V40C34 40 29 38 24 40C19 38 14 40 14 40V32Z" fill="url(#gold-grad)" opacity="0.85"/>
+  <!-- Book spine -->
+  <line x1="24" y1="32" x2="24" y2="40" stroke="#0d0f17" stroke-width="0.8" opacity="0.5"/>
+</svg>
